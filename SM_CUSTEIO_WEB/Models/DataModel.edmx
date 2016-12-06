@@ -1,0 +1,343 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SB_CUSTEIOModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="Endereco" Type="varchar" MaxLength="150" Nullable="false" />
+          <Property Name="Telefone" Type="varchar" MaxLength="13" Nullable="false" />
+          <Property Name="Website" Type="varchar" MaxLength="170" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome_Material" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="255" />
+          <Property Name="Preco_produto" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MateriaPrima">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="75" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="255" />
+          <Property Name="Preco" Type="decimal" Precision="18" Scale="2" Nullable="false" />
+          <Property Name="Produto_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Produto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Codigo" Type="int" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="45" Nullable="false" />
+          <Property Name="Descricao" Type="varchar" MaxLength="255" />
+          <Property Name="Preco" Type="decimal" Precision="18" Scale="2" />
+          <Property Name="Empresa_Id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProdutoMaterial">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Produto_Id" Type="int" Nullable="false" />
+          <Property Name="Material_Id" Type="int" Nullable="false" />
+          <Property Name="QtdMaterial" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_MateriaPrima_Produto">
+          <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
+          <End Role="MateriaPrima" Type="Self.MateriaPrima" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MateriaPrima">
+              <PropertyRef Name="Produto_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProdutoMaterial_ToMaterial">
+          <End Role="Material" Type="Self.Material" Multiplicity="1" />
+          <End Role="ProdutoMaterial" Type="Self.ProdutoMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProdutoMaterial">
+              <PropertyRef Name="Material_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProdutoMaterial_ToProduto">
+          <End Role="Produto" Type="Self.Produto" Multiplicity="1" />
+          <End Role="ProdutoMaterial" Type="Self.ProdutoMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProdutoMaterial">
+              <PropertyRef Name="Produto_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Table_ToEmpresa">
+          <End Role="Empresa" Type="Self.Empresa" Multiplicity="1" />
+          <End Role="Produto" Type="Self.Produto" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Produto">
+              <PropertyRef Name="Empresa_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SB_CUSTEIOModelStoreContainer">
+          <EntitySet Name="Empresa" EntityType="Self.Empresa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Material" EntityType="Self.Material" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MateriaPrima" EntityType="Self.MateriaPrima" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Produto" EntityType="Self.Produto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProdutoMaterial" EntityType="Self.ProdutoMaterial" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_MateriaPrima_Produto" Association="Self.FK_MateriaPrima_Produto">
+            <End Role="Produto" EntitySet="Produto" />
+            <End Role="MateriaPrima" EntitySet="MateriaPrima" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProdutoMaterial_ToMaterial" Association="Self.FK_ProdutoMaterial_ToMaterial">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="ProdutoMaterial" EntitySet="ProdutoMaterial" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProdutoMaterial_ToProduto" Association="Self.FK_ProdutoMaterial_ToProduto">
+            <End Role="Produto" EntitySet="Produto" />
+            <End Role="ProdutoMaterial" EntitySet="ProdutoMaterial" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_ToEmpresa" Association="Self.FK_Table_ToEmpresa">
+            <End Role="Empresa" EntitySet="Empresa" />
+            <End Role="Produto" EntitySet="Produto" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SB_CUSTEIOModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="DataModel" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Empresa" EntityType="SB_CUSTEIOModel.Empresa" />
+          <EntitySet Name="MateriaPrima" EntityType="SB_CUSTEIOModel.MateriaPrima" />
+          <EntitySet Name="Produto" EntityType="SB_CUSTEIOModel.Produto" />
+          <AssociationSet Name="FK_Table_ToEmpresa" Association="SB_CUSTEIOModel.FK_Table_ToEmpresa">
+            <End EntitySet="Empresa" Role="Empresa" />
+            <End EntitySet="Produto" Role="Produto" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MateriaPrima_Produto" Association="SB_CUSTEIOModel.FK_MateriaPrima_Produto">
+            <End EntitySet="Produto" Role="Produto" />
+            <End EntitySet="MateriaPrima" Role="MateriaPrima" />
+          </AssociationSet>
+          <EntitySet Name="Material" EntityType="SB_CUSTEIOModel.Material" />
+          <EntitySet Name="ProdutoMaterial" EntityType="SB_CUSTEIOModel.ProdutoMaterial" />
+          <AssociationSet Name="FK_ProdutoMaterial_ToMaterial" Association="SB_CUSTEIOModel.FK_ProdutoMaterial_ToMaterial">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="ProdutoMaterial" EntitySet="ProdutoMaterial" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProdutoMaterial_ToProduto" Association="SB_CUSTEIOModel.FK_ProdutoMaterial_ToProduto">
+            <End Role="Produto" EntitySet="Produto" />
+            <End Role="ProdutoMaterial" EntitySet="ProdutoMaterial" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Empresa">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Nome" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Endereco" Nullable="false" MaxLength="150" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Telefone" Nullable="false" MaxLength="13" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Website" MaxLength="170" FixedLength="false" Unicode="false" Type="String" />
+          <NavigationProperty Name="Produto" Relationship="SB_CUSTEIOModel.FK_Table_ToEmpresa" FromRole="Empresa" ToRole="Produto" />
+        </EntityType>
+        <EntityType Name="MateriaPrima">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Nome" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Descricao" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Preco" Nullable="false" Precision="18" Scale="2" Type="Decimal" />
+          <Property Name="Produto_Id" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="Produto" Relationship="SB_CUSTEIOModel.FK_MateriaPrima_Produto" FromRole="MateriaPrima" ToRole="Produto" />
+        </EntityType>
+        <EntityType Name="Produto">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Nullable="false" annotation:StoreGeneratedPattern="Identity" Type="Int32" />
+          <Property Name="Codigo" Nullable="false" Type="Int32" />
+          <Property Name="Nome" Nullable="false" MaxLength="45" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Descricao" MaxLength="255" FixedLength="false" Unicode="false" Type="String" />
+          <Property Name="Preco" Precision="18" Scale="2" Type="Decimal" />
+          <Property Name="Empresa_Id" Nullable="false" Type="Int32" />
+          <NavigationProperty Name="Empresa" Relationship="SB_CUSTEIOModel.FK_Table_ToEmpresa" FromRole="Produto" ToRole="Empresa" />
+          <NavigationProperty Name="MateriaPrima" Relationship="SB_CUSTEIOModel.FK_MateriaPrima_Produto" FromRole="Produto" ToRole="MateriaPrima" />
+          <NavigationProperty Name="ProdutoMaterial" Relationship="SB_CUSTEIOModel.FK_ProdutoMaterial_ToProduto" FromRole="Produto" ToRole="ProdutoMaterial" />
+        </EntityType>
+        <Association Name="FK_Table_ToEmpresa">
+          <End Type="SB_CUSTEIOModel.Empresa" Multiplicity="1" Role="Empresa" />
+          <End Type="SB_CUSTEIOModel.Produto" Multiplicity="*" Role="Produto" />
+          <ReferentialConstraint>
+            <Principal Role="Empresa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Produto">
+              <PropertyRef Name="Empresa_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MateriaPrima_Produto">
+          <End Type="SB_CUSTEIOModel.Produto" Multiplicity="1" Role="Produto" />
+          <End Type="SB_CUSTEIOModel.MateriaPrima" Multiplicity="*" Role="MateriaPrima" />
+          <ReferentialConstraint>
+            <Principal Role="Produto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="MateriaPrima">
+              <PropertyRef Name="Produto_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nome_Material" Type="String" Nullable="false" MaxLength="75" FixedLength="false" Unicode="false" />
+          <Property Name="Descricao" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Preco_produto" Type="Decimal" Nullable="false" Precision="18" Scale="2" />
+          <NavigationProperty Name="ProdutoMaterial" Relationship="SB_CUSTEIOModel.FK_ProdutoMaterial_ToMaterial" FromRole="Material" ToRole="ProdutoMaterial" />
+        </EntityType>
+        <EntityType Name="ProdutoMaterial">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Produto_Id" Type="Int32" Nullable="false" />
+          <Property Name="Material_Id" Type="Int32" Nullable="false" />
+          <Property Name="QtdMaterial" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Material" Relationship="SB_CUSTEIOModel.FK_ProdutoMaterial_ToMaterial" FromRole="ProdutoMaterial" ToRole="Material" />
+          <NavigationProperty Name="Produto" Relationship="SB_CUSTEIOModel.FK_ProdutoMaterial_ToProduto" FromRole="ProdutoMaterial" ToRole="Produto" />
+        </EntityType>
+        <Association Name="FK_ProdutoMaterial_ToMaterial">
+          <End Type="SB_CUSTEIOModel.Material" Role="Material" Multiplicity="1" />
+          <End Type="SB_CUSTEIOModel.ProdutoMaterial" Role="ProdutoMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProdutoMaterial">
+              <PropertyRef Name="Material_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProdutoMaterial_ToProduto">
+          <End Type="SB_CUSTEIOModel.Produto" Role="Produto" Multiplicity="1" />
+          <End Type="SB_CUSTEIOModel.ProdutoMaterial" Role="ProdutoMaterial" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Produto">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProdutoMaterial">
+              <PropertyRef Name="Produto_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SB_CUSTEIOModelStoreContainer" CdmEntityContainer="DataModel">
+          <EntitySetMapping Name="Empresa">
+            <EntityTypeMapping TypeName="SB_CUSTEIOModel.Empresa">
+              <MappingFragment StoreEntitySet="Empresa">
+                <ScalarProperty Name="Website" ColumnName="Website" />
+                <ScalarProperty Name="Telefone" ColumnName="Telefone" />
+                <ScalarProperty Name="Endereco" ColumnName="Endereco" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MateriaPrima">
+            <EntityTypeMapping TypeName="SB_CUSTEIOModel.MateriaPrima">
+              <MappingFragment StoreEntitySet="MateriaPrima">
+                <ScalarProperty Name="Produto_Id" ColumnName="Produto_Id" />
+                <ScalarProperty Name="Preco" ColumnName="Preco" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Produto">
+            <EntityTypeMapping TypeName="SB_CUSTEIOModel.Produto">
+              <MappingFragment StoreEntitySet="Produto">
+                <ScalarProperty Name="Empresa_Id" ColumnName="Empresa_Id" />
+                <ScalarProperty Name="Preco" ColumnName="Preco" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
+                <ScalarProperty Name="Codigo" ColumnName="Codigo" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Material">
+            <EntityTypeMapping TypeName="SB_CUSTEIOModel.Material">
+              <MappingFragment StoreEntitySet="Material">
+                <ScalarProperty Name="Preco_produto" ColumnName="Preco_produto" />
+                <ScalarProperty Name="Descricao" ColumnName="Descricao" />
+                <ScalarProperty Name="Nome_Material" ColumnName="Nome_Material" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProdutoMaterial">
+            <EntityTypeMapping TypeName="SB_CUSTEIOModel.ProdutoMaterial">
+              <MappingFragment StoreEntitySet="ProdutoMaterial">
+                <ScalarProperty Name="QtdMaterial" ColumnName="QtdMaterial" />
+                <ScalarProperty Name="Material_Id" ColumnName="Material_Id" />
+                <ScalarProperty Name="Produto_Id" ColumnName="Produto_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

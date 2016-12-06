@@ -1,0 +1,48 @@
+﻿@model IEnumerable<CRUD.Models.Pessoa>
+
+@{
+    ViewBag.Title = "List";
+}
+
+<h2>List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<div class="table-responsive">
+    <table class="table .table-bordered">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Endereco)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Email)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Endereco)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.Codigo }, new { @class = "glyphicon glyphicon-plus-sign" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.Codigo }, new { @class = "glyphicon glyphicon-eye-open" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Codigo }, new { @class = "glyphicon glyphicon-trash" })
+                </td>
+            </tr>
+        }
+
+    </table>
+    </div>

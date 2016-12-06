@@ -1,0 +1,62 @@
+﻿@model IEnumerable<SM_CUSTEIO_WEB.Models.MateriaPrima>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+    <div class="alert alert-success" role="alert">
+        @ViewBag.Message
+    </div>
+    <div class="well well-sm">
+        <strong>Lista de Materiais</strong>
+    </div>
+<div class="table btn-group-sm">
+    @Html.ActionLink("Adicionar Material", "Create", new { id = @ViewBag.ProdutoID }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Listar Produtos", "Index", "Produto", null, new { @class = "btn btn-default" })
+</div>
+
+<table id="table" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Preco)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Produto.Nome)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Preco)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Produto.Nome)
+                </td>
+                <td>
+                    <div class="btn-group-sm">
+                        @Html.ActionLink("Alterar", "Edit", new { id = item.Id }, new { @class = "btn btn-info" })
+                        @Html.ActionLink("Visualizar", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
+                        @Html.ActionLink("Deletar", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

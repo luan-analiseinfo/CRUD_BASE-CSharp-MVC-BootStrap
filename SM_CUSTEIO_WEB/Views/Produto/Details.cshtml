@@ -1,0 +1,68 @@
+﻿@model SM_CUSTEIO_WEB.Models.Produto
+
+@{
+    ViewBag.Title = "Visualizar";
+}
+
+
+<div class="well well-sm">
+    <strong>Visualizar</strong>
+</div>
+
+
+<div>
+    <h4>Produto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Codigo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Codigo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Preco)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Preco)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Empresa.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Empresa.Nome)
+        </dd>
+
+    </dl>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.ActionLink("Alterar", "Edit", new { id = Model.Id }, new { @class = "btn btn-success" })    
+        </div>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Retornar a Lista", "Index", null, new { @class = "btn btn-primary" })
+</div>

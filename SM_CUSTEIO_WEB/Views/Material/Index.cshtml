@@ -1,0 +1,54 @@
+﻿@model IEnumerable<SM_CUSTEIO_WEB.Models.Material>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2> 
+
+
+<div class="well well-sm">
+    <strong>Lista de Materiais</strong>
+</div>
+
+<div class="table btn-group-sm">
+    @Html.ActionLink("Adicionar Material", "Create", null, new { @class = "btn btn-primary" })
+</div>
+<table id="table" class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>
+                Material
+            </th>
+            <th>
+                Descrição
+            </th>
+            <th>
+                Preço
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nome_Material)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Descricao)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Preco_produto)
+                </td>
+                <td class="btn-group-sm">
+                    @Html.ActionLink("Alterar", "Edit", new { id = item.Id }, new { @class = "btn btn-info" })
+                    @Html.ActionLink("Visualizar", "Details", new { id = item.Id }, new { @class = "btn btn-primary" })
+                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

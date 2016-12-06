@@ -1,0 +1,47 @@
+﻿@model SM_CUSTEIO_WEB.Models.Material
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Material</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nome_Material) 
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nome_Material)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descricao)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descricao)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Preco_produto)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Preco_produto)
+        </dd>
+       
+    </dl>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            @Html.ActionLink("Alterar", "Edit", new { id = Model.Id }, new { @class = "btn btn-success" })
+        </div>
+    </div>
+</div>
+
+<div>
+    @Html.ActionLink("Retornar a Lista", "Index", null, new { @class = "btn btn-primary" })
+</div>

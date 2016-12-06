@@ -1,0 +1,42 @@
+﻿@model SM_CUSTEIO_WEB.Models.ProdutoMaterial
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ProdutoMaterial</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.QtdMaterial)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QtdMaterial)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Material.Nome_Material)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Material.Nome_Material)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Produto.Nome)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Produto.Nome)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
